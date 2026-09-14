@@ -1,0 +1,122 @@
+{
+  "settings": {
+    "app_id": "com.bluestone.android",
+    "company": "BlueStone",
+    "languages": [
+      "en",
+      "hi",
+      "ta",
+      "te",
+      "mr",
+      "gu",
+      "kn",
+      "ml",
+      "bn",
+      "pa",
+      "or",
+      "as",
+      "ur"
+    ],
+    "country": "in",
+    "sort": "newest",
+    "limit": null
+  },
+  "source_url": "https://play.google.com/store/apps/details?id=com.bluestone.android",
+  "scraper_version": "1.0.0",
+  "dependency_version": "1.2.7",
+  "started_at": "2026-09-09T02:56:33.567126+00:00",
+  "ended_at": "2026-09-09T02:56:51.839880+00:00",
+  "elapsed_seconds": 18.344,
+  "complete_history_verified": false,
+  "coverage_note": "Pagination exhaustion covers requested streams only, not verified worldwide history.",
+  "timing_note": "Active collection, checkpoint and export time; excludes idle gaps. Abrupt process termination may lose timing since the last committed batch.",
+  "status": "completed",
+  "error": null,
+  "streams": [
+    {
+      "language": "en",
+      "status": "stream_ended",
+      "rows_received": 3170,
+      "pages": 1
+    },
+    {
+      "language": "hi",
+      "status": "stream_ended",
+      "rows_received": 5,
+      "pages": 1
+    },
+    {
+      "language": "ta",
+      "status": "empty_response",
+      "rows_received": 0,
+      "pages": 1
+    },
+    {
+      "language": "te",
+      "status": "empty_response",
+      "rows_received": 0,
+      "pages": 1
+    },
+    {
+      "language": "mr",
+      "status": "empty_response",
+      "rows_received": 0,
+      "pages": 1
+    },
+    {
+      "language": "gu",
+      "status": "stream_ended",
+      "rows_received": 1,
+      "pages": 1
+    },
+    {
+      "language": "kn",
+      "status": "stream_ended",
+      "rows_received": 1,
+      "pages": 1
+    },
+    {
+      "language": "ml",
+      "status": "empty_response",
+      "rows_received": 0,
+      "pages": 1
+    },
+    {
+      "language": "bn",
+      "status": "stream_ended",
+      "rows_received": 1,
+      "pages": 1
+    },
+    {
+      "language": "pa",
+      "status": "stream_ended",
+      "rows_received": 1,
+      "pages": 1
+    },
+    {
+      "language": "or",
+      "status": "empty_response",
+      "rows_received": 0,
+      "pages": 1
+    },
+    {
+      "language": "as",
+      "status": "empty_response",
+      "rows_received": 0,
+      "pages": 1
+    },
+    {
+      "language": "ur",
+      "status": "empty_response",
+      "rows_received": 0,
+      "pages": 1
+    }
+  ],
+  "unique_reviews_retrieved": 3179,
+  "reviews_exported": 3179,
+  "replies_retrieved": 2430,
+  "replies_exported": 2430,
+  "duplicates_removed": 0,
+  "output_truncated": false,
+  "completion_reason": "All requested streams returned no continuation token."
+}

@@ -1,0 +1,47 @@
+[
+  {
+    "name": "CaratLane",
+    "mentions": 14,
+    "sent": {
+      "pos": 36,
+      "neu": 7,
+      "neg": 57
+    }
+  },
+  {
+    "name": "Tanishq",
+    "mentions": 10,
+    "sent": {
+      "pos": 10,
+      "neu": 10,
+      "neg": 80
+    }
+  },
+  {
+    "name": "Malabar Gold",
+    "mentions": 2,
+    "sent": {
+      "pos": 0,
+      "neu": 0,
+      "neg": 100
+    }
+  },
+  {
+    "name": "Candere",
+    "mentions": 1,
+    "sent": {
+      "pos": 100,
+      "neu": 0,
+      "neg": 0
+    }
+  },
+  {
+    "name": "Senco",
+    "mentions": 1,
+    "sent": {
+      "pos": 0,
+      "neu": 100,
+      "neg": 0
+    }
+  }
+]

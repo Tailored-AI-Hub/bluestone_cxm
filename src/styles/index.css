@@ -1,0 +1,171 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+html, body, #root {
+  margin: 0;
+  height: 100%;
+}
+body {
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  background: #eaeef7;
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+  letter-spacing: -0.025em;
+}
+button, input, select {
+  font-family: inherit;
+}
+
+.bs-scroll::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+.bs-scroll::-webkit-scrollbar-thumb {
+  background: rgba(37, 99, 235, 0.22);
+  border-radius: 6px;
+}
+
+.bs-panel {
+  position: relative;
+  background: #fff;
+  border: 1px solid #eaeef6;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 14px 34px rgba(23, 43, 90, 0.055);
+}
+
+.btn {
+  border-radius: 12px;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  border: 1px solid transparent;
+  padding: 9px 16px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.btn-primary {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.32);
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+}
+.btn-secondary {
+  border-radius: 12px;
+  background: #fff;
+  border-color: #e6eaf3;
+  color: #33415c;
+}
+.btn-secondary:hover {
+  background: #eef3fd;
+  border-color: #cdd9f2;
+}
+.btn-secondary.active {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  border-color: transparent;
+  color: #fff;
+}
+.btn-ghost {
+  color: #2563eb;
+  border-color: transparent;
+  background: transparent;
+}
+
+.field label {
+  display: block;
+  color: #7a86a0;
+  font-weight: 600;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+.input, select.input {
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #e6eaf3;
+  min-height: 40px;
+  padding: 0 12px;
+  font-size: 13.5px;
+  color: #1d2d3d;
+  width: 100%;
+}
+.input:hover {
+  border-color: #c2cfe8;
+}
+.input:focus-visible {
+  border-color: #2563eb;
+  outline-color: #2563eb;
+}
+select.input {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%232563eb' stroke-width='2.2'><path d='M6 9l6 6 6-6'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 30px;
+}
+
+.seg {
+  display: flex;
+  border-radius: 12px;
+  background: #fff;
+  border: 1px solid #e6eaf3;
+  overflow: hidden;
+  width: fit-content;
+}
+.seg-opt {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #33415c;
+  cursor: pointer;
+  border-right: 1px solid #e6eaf3;
+}
+.seg-opt:last-child {
+  border-right: none;
+}
+.seg-opt input {
+  display: none;
+}
+.seg-opt.active {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: #fff;
+}
+
+.tag {
+  border-radius: 999px;
+  font-weight: 600;
+  padding: 4px 11px;
+  font-size: 11px;
+  display: inline-block;
+}
+.tag-accent {
+  background: #e6efff;
+  color: #1d4ed8;
+}
+.tag-neutral {
+  background: #eef1f8;
+  color: #556080;
+}
+.tag-outline {
+  border: 1px solid #2563eb;
+  color: #2563eb;
+  background: transparent;
+}
+
+a {
+  color: #2563eb;
+}
+::selection {
+  background: rgba(59, 130, 246, 0.22);
+}
