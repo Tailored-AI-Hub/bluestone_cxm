@@ -18,6 +18,7 @@ const views = {
 
 export default function App() {
   const [page, setPage] = useState("overview");
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
   const ActiveView = views[page];
 
   return (
@@ -33,7 +34,13 @@ export default function App() {
           overflow: "hidden",
         }}
       >
-        <Sidebar page={page} onNavigate={setPage} totalReviews={kpis.totalReviews} />
+        <Sidebar
+          page={page}
+          onNavigate={setPage}
+          totalReviews={kpis.totalReviews}
+          collapsed={sidebarCollapsed}
+          onToggleCollapsed={() => setSidebarCollapsed((c) => !c)}
+        />
         <main className="bs-scroll" style={{ flex: 1, overflowY: "auto", minWidth: 0 }}>
           <div style={{ maxWidth: 1240, margin: "0 auto", padding: "26px 34px 60px" }}>
             <ActiveView />
