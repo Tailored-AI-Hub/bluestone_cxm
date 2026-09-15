@@ -1,6 +1,7 @@
 import { useState, useMemo } from "react";
 import { decorate, fmt } from "../lib/format";
 import reviews from "../data/generated/reviews.json";
+import useIsMobile from "../lib/useIsMobile";
 
 const PAGE_SIZE = 6;
 
@@ -37,6 +38,7 @@ export default function ReviewsFeed() {
   const [platform, setPlatform] = useState("all");
   const [star, setStar] = useState("all");
   const [page, setPage] = useState(1);
+  const isMobile = useIsMobile();
 
   const filtered = useMemo(() => {
     const cutoff = cutoffFor(timeTabDefs.find((t) => t.v === timeTab).days);
@@ -59,7 +61,7 @@ export default function ReviewsFeed() {
 
   return (
     <section>
-      <h1 style={{ fontSize: 38, margin: "2px 0 4px", color: "#132434" }}>Reviews feed</h1>
+      <h1 className="bs-h1" style={{ fontSize: 38, margin: "2px 0 4px", color: "#132434" }}>Reviews feed</h1>
       <p style={{ color: "#5b6672", fontSize: 15, margin: "0 0 20px" }}>
         Every collected Play Store review, filterable by time, and rating.
       </p>
@@ -72,7 +74,7 @@ export default function ReviewsFeed() {
         ))}
       </div>
 
-      <div style={{ display: "flex", gap: 14, flexWrap: "wrap", alignItems: "flex-end", marginBottom: 20 }}>
+      <div className="bs-filterrow-2col" style={{ display: "flex", gap: 14, flexWrap: "wrap", alignItems: "flex-end", marginBottom: 20 }}>
         <div className="field" style={{ minWidth: 200 }}>
           <label>Platform</label>
           <select className="input" value={platform} disabled>
@@ -90,59 +92,112 @@ export default function ReviewsFeed() {
             ))}
           </select>
         </div>
-        <div style={{ marginLeft: "auto", fontSize: 13, color: "#7a8593", paddingBottom: 8 }}>
+        <div className="bs-reviewcount" style={{ marginLeft: "auto", fontSize: 13, color: "#7a8593", paddingBottom: 8 }}>
           <strong style={{ color: "#1d2d3d" }}>{fmt(filtered.length)}</strong> reviews
         </div>
       </div>
 
       <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-        {paged.map((r, i) => (
-          <div key={i} className="bs-panel" style={{ padding: "18px 20px" }}>
-            <div style={{ display: "flex", alignItems: "flex-start", gap: 14 }}>
-              <div
-                style={{
-                  width: 34,
-                  height: 34,
-                  flex: "none",
-                  background: r.platColor,
-                  color: "#fff",
-                  display: "grid",
-                  placeItems: "center",
-                  font: '700 13px/1 "Plus Jakarta Sans",sans-serif',
-                }}
-                title={r.platName}
-              >
-                {r.platIcon}
-              </div>
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-                  <span style={{ font: '600 15px/1 "Plus Jakarta Sans",sans-serif', color: "#132434" }}>{r.name}</span>
-                  {r.verified && (
-                    <span className="tag tag-accent" style={{ fontSize: 10 }}>
-                      Verified
-                    </span>
-                  )}
-                  <span style={{ fontSize: 12, color: "#8a94a0" }}>{r.platName}</span>
-                  <span style={{ color: "#f0b429", letterSpacing: 2, fontSize: 14 }}>{r.stars}</span>
+        {paged.map((r, i) =>
+          isMobile ? (
+            <div key={i} className="bs-panel" style={{ padding: "16px" }}>
+              <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 10 }}>
+                <div style={{ display: "flex", alignItems: "flex-start", gap: 11, minWidth: 0 }}>
+                  <div
+                    style={{
+                      width: 34,
+                      height: 34,
+                      flex: "none",
+                      background: r.platColor,
+                      color: "#fff",
+                      display: "grid",
+                      placeItems: "center",
+                      font: '700 13px/1 "Plus Jakarta Sans",sans-serif',
+                    }}
+                    title={r.platName}
+                  >
+                    {r.platIcon}
+                  </div>
+                  <div style={{ minWidth: 0 }}>
+                    <div style={{ font: '700 15px/1.15 "Plus Jakarta Sans",sans-serif', color: "#132434" }}>{r.name}</div>
+                    <div style={{ fontSize: 11.5, color: "#9aa3b2", marginTop: 2 }}>{r.platName}</div>
+                  </div>
                 </div>
-                <p style={{ margin: "9px 0 10px", fontSize: 14, color: "#33414f", lineHeight: 1.6 }}>{r.text}</p>
-                <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-                  <span style={r.senStyle}>{r.senLabel}</span>
-                  {r.compTag && (
-                    <span className="tag tag-outline" style={{ fontSize: 10 }}>
-                      mentions {r.compTag}
-                    </span>
-                  )}
-                  <span style={{ fontSize: 12, color: "#9aa4b0", marginLeft: "auto" }}>{r.date}</span>
+                <span style={{ color: "#f0b429", letterSpacing: 2, fontSize: 14, flex: "none", paddingTop: 2 }}>{r.stars}</span>
+              </div>
+              <p style={{ margin: "12px 0 10px", fontSize: 13.5, color: "#33414f", lineHeight: 1.6 }}>{r.text}</p>
+              <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                <span style={r.senStyle}>{r.senLabel}</span>
+                {r.verified && (
+                  <span className="tag tag-accent" style={{ fontSize: 10 }}>
+                    Verified
+                  </span>
+                )}
+                {r.compTag && (
+                  <span className="tag tag-outline" style={{ fontSize: 10 }}>
+                    mentions {r.compTag}
+                  </span>
+                )}
+              </div>
+              <div className="bs-rcard-divider" />
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                <span style={{ fontSize: 12, color: "#9aa3b2" }}>{r.date}</span>
+                <span className="bs-rcard-openbtn">
+                  <svg width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="#8b95a7" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M7 17 17 7" />
+                    <path d="M8 7h9v9" />
+                  </svg>
+                </span>
+              </div>
+            </div>
+          ) : (
+            <div key={i} className="bs-panel" style={{ padding: "18px 20px" }}>
+              <div style={{ display: "flex", alignItems: "flex-start", gap: 14 }}>
+                <div
+                  style={{
+                    width: 34,
+                    height: 34,
+                    flex: "none",
+                    background: r.platColor,
+                    color: "#fff",
+                    display: "grid",
+                    placeItems: "center",
+                    font: '700 13px/1 "Plus Jakarta Sans",sans-serif',
+                  }}
+                  title={r.platName}
+                >
+                  {r.platIcon}
+                </div>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+                    <span style={{ font: '600 15px/1 "Plus Jakarta Sans",sans-serif', color: "#132434" }}>{r.name}</span>
+                    {r.verified && (
+                      <span className="tag tag-accent" style={{ fontSize: 10 }}>
+                        Verified
+                      </span>
+                    )}
+                    <span style={{ fontSize: 12, color: "#8a94a0" }}>{r.platName}</span>
+                    <span style={{ color: "#f0b429", letterSpacing: 2, fontSize: 14 }}>{r.stars}</span>
+                  </div>
+                  <p style={{ margin: "9px 0 10px", fontSize: 14, color: "#33414f", lineHeight: 1.6 }}>{r.text}</p>
+                  <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+                    <span style={r.senStyle}>{r.senLabel}</span>
+                    {r.compTag && (
+                      <span className="tag tag-outline" style={{ fontSize: 10 }}>
+                        mentions {r.compTag}
+                      </span>
+                    )}
+                    <span style={{ fontSize: 12, color: "#9aa4b0", marginLeft: "auto" }}>{r.date}</span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          )
+        )}
         {paged.length === 0 && <div style={{ padding: 24, textAlign: "center", color: "#9aa4b0", fontSize: 13 }}>No reviews match this selection.</div>}
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginTop: 24 }}>
+      <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center", gap: 8, marginTop: 24 }}>
         <button onClick={() => setPage((p) => Math.max(1, p - 1))} className="btn btn-secondary" style={{ fontSize: 13 }}>
           Prev
         </button>

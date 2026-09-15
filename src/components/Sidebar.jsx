@@ -45,15 +45,120 @@ function NavButton({ item, page, onGo, collapsed }) {
   );
 }
 
-function ChevronIcon({ collapsed }) {
+function HamburgerIcon() {
   return (
-    <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="butt" strokeLinejoin="round" style={{ display: "block", transform: collapsed ? "rotate(180deg)" : "none" }}>
-      <path d="M15 6l-6 6 6 6" />
+    <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" style={{ display: "block" }}>
+      <line x1={3} y1={6} x2={21} y2={6} />
+      <line x1={3} y1={12} x2={21} y2={12} />
+      <line x1={3} y1={18} x2={21} y2={18} />
     </svg>
   );
 }
 
-export default function Sidebar({ page, onNavigate, totalReviews, collapsed, onToggleCollapsed }) {
+function CloseIcon() {
+  return (
+    <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.4} strokeLinecap="round" style={{ display: "block" }}>
+      <path d="M18 6 6 18M6 6l12 12" />
+    </svg>
+  );
+}
+
+function NavContent({ page, onGo, collapsed, totalReviews }) {
+  return (
+    <>
+      <div style={{ padding: "2px 4px 18px" }}>
+        {collapsed ? (
+          <div
+            style={{
+              width: 34,
+              height: 34,
+              margin: "0 auto",
+              borderRadius: 9,
+              background: "linear-gradient(135deg,#3b82f6,#1d4ed8)",
+              display: "grid",
+              placeItems: "center",
+              font: '700 13px/1 "Plus Jakarta Sans",sans-serif',
+              color: "#fff",
+            }}
+          >
+            BS
+          </div>
+        ) : (
+          <>
+            <img src={logo} alt="BlueStone" style={{ width: "100%", height: "auto", display: "block", borderRadius: 4 }} />
+            <div style={{ fontSize: 11, color: "rgba(255,255,255,.55)", marginTop: 8, paddingLeft: 4 }}>Voice of Customer</div>
+          </>
+        )}
+      </div>
+
+      {!collapsed && (
+        <div style={{ font: '700 10px/1 "Plus Jakarta Sans",sans-serif', letterSpacing: ".14em", color: "rgba(255,255,255,.4)", padding: "6px 8px 10px" }}>
+          REVIEW INTELLIGENCE
+        </div>
+      )}
+      <nav style={{ display: "flex", flexDirection: "column" }}>
+        {navA.map((n) => (
+          <NavButton key={n.id} item={n} page={page} onGo={onGo} collapsed={collapsed} />
+        ))}
+      </nav>
+
+      {!collapsed && (
+        <div style={{ font: '700 10px/1 "Plus Jakarta Sans",sans-serif', letterSpacing: ".14em", color: "rgba(255,255,255,.4)", padding: "20px 8px 10px" }}>
+          GO DEEPER
+        </div>
+      )}
+      <nav style={{ display: "flex", flexDirection: "column", marginTop: collapsed ? 8 : 0 }}>
+        {navB.map((n) => (
+          <NavButton key={n.id} item={n} page={page} onGo={onGo} collapsed={collapsed} />
+        ))}
+      </nav>
+
+      {!collapsed && (
+        <div style={{ marginTop: "auto", padding: "18px 8px 0", borderTop: "1px solid rgba(255,255,255,.1)" }}>
+          <div style={{ font: '600 12px/1 "Plus Jakarta Sans",sans-serif', letterSpacing: ".04em", color: "rgba(255,255,255,.85)" }}>
+            Review snapshot
+          </div>
+          <div style={{ fontSize: 11, color: "rgba(255,255,255,.5)", marginTop: 6, lineHeight: 1.6 }}>
+            Real Play Store reviews {"·"} {fmt(totalReviews)} total
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
+export default function Sidebar({ page, onNavigate, totalReviews, collapsed, onToggleCollapsed, mobile, drawerOpen, onCloseDrawer }) {
+  if (mobile) {
+    return (
+      <>
+        <div className={"bs-drawer-overlay" + (drawerOpen ? " open" : "")} onClick={onCloseDrawer} />
+        <aside className={"bs-drawer bs-scroll" + (drawerOpen ? " open" : "")}>
+          <button
+            onClick={onCloseDrawer}
+            title="Close menu"
+            style={{
+              position: "absolute",
+              top: 16,
+              right: 16,
+              width: 34,
+              height: 34,
+              borderRadius: 10,
+              background: "rgba(255,255,255,.08)",
+              border: "none",
+              color: "rgba(255,255,255,.78)",
+              display: "grid",
+              placeItems: "center",
+              cursor: "pointer",
+            }}
+          >
+            <CloseIcon />
+          </button>
+          <NavContent page={page} onGo={onNavigate} collapsed={false} totalReviews={totalReviews} />
+        </aside>
+      </>
+    );
+  }
+
   return (
     <div style={{ position: "relative", flex: "none", display: "flex" }}>
       <aside
@@ -73,63 +178,7 @@ export default function Sidebar({ page, onNavigate, totalReviews, collapsed, onT
           backgroundPosition: "center",
         }}
       >
-        <div style={{ padding: "2px 4px 18px" }}>
-          {collapsed ? (
-            <div
-              style={{
-                width: 34,
-                height: 34,
-                margin: "0 auto",
-                borderRadius: 9,
-                background: "linear-gradient(135deg,#3b82f6,#1d4ed8)",
-                display: "grid",
-                placeItems: "center",
-                font: '700 13px/1 "Plus Jakarta Sans",sans-serif',
-                color: "#fff",
-              }}
-            >
-              BS
-            </div>
-          ) : (
-            <>
-              <img src={logo} alt="BlueStone" style={{ width: "100%", height: "auto", display: "block", borderRadius: 4 }} />
-              <div style={{ fontSize: 11, color: "rgba(255,255,255,.55)", marginTop: 8, paddingLeft: 4 }}>Voice of Customer</div>
-            </>
-          )}
-        </div>
-
-        {!collapsed && (
-          <div style={{ font: '700 10px/1 "Plus Jakarta Sans",sans-serif', letterSpacing: ".14em", color: "rgba(255,255,255,.4)", padding: "6px 8px 10px" }}>
-            REVIEW INTELLIGENCE
-          </div>
-        )}
-        <nav style={{ display: "flex", flexDirection: "column" }}>
-          {navA.map((n) => (
-            <NavButton key={n.id} item={n} page={page} onGo={onNavigate} collapsed={collapsed} />
-          ))}
-        </nav>
-
-        {!collapsed && (
-          <div style={{ font: '700 10px/1 "Plus Jakarta Sans",sans-serif', letterSpacing: ".14em", color: "rgba(255,255,255,.4)", padding: "20px 8px 10px" }}>
-            GO DEEPER
-          </div>
-        )}
-        <nav style={{ display: "flex", flexDirection: "column", marginTop: collapsed ? 8 : 0 }}>
-          {navB.map((n) => (
-            <NavButton key={n.id} item={n} page={page} onGo={onNavigate} collapsed={collapsed} />
-          ))}
-        </nav>
-
-        {!collapsed && (
-          <div style={{ marginTop: "auto", padding: "18px 8px 0", borderTop: "1px solid rgba(255,255,255,.1)" }}>
-            <div style={{ font: '600 12px/1 "Plus Jakarta Sans",sans-serif', letterSpacing: ".04em", color: "rgba(255,255,255,.85)" }}>
-              Review snapshot
-            </div>
-            <div style={{ fontSize: 11, color: "rgba(255,255,255,.5)", marginTop: 6, lineHeight: 1.6 }}>
-              Real Play Store reviews {"·"} {fmt(totalReviews)} total
-            </div>
-          </div>
-        )}
+        <NavContent page={page} onGo={onNavigate} collapsed={collapsed} totalReviews={totalReviews} />
       </aside>
 
       <button
@@ -152,7 +201,7 @@ export default function Sidebar({ page, onNavigate, totalReviews, collapsed, onT
           zIndex: 5,
         }}
       >
-        <ChevronIcon collapsed={collapsed} />
+        <HamburgerIcon />
       </button>
     </div>
   );

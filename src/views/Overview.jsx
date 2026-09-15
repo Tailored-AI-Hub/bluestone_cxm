@@ -56,13 +56,13 @@ export default function Overview() {
 
   return (
     <section>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, flexWrap: "wrap", marginBottom: 6 }}>
+      <div className="bs-mobile-hide" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, flexWrap: "wrap", marginBottom: 6 }}>
         <div style={{ fontSize: 12, color: "#7a8593", display: "flex", alignItems: "center", gap: 8 }}>
           Workspace <span style={{ opacity: 0.5 }}>&rsaquo;</span> <span style={{ color: "#1d2d3d", fontWeight: 600 }}>Overview</span>
         </div>
         <button className="btn btn-primary">Export summary</button>
       </div>
-      <h1 style={{ fontSize: 38, margin: "2px 0 4px", color: "#132434" }}>Customer feedback overview</h1>
+      <h1 className="bs-h1" style={{ fontSize: 38, margin: "2px 0 4px", color: "#132434" }}>Customer feedback overview</h1>
       <p style={{ color: "#5b6672", fontSize: 15, margin: "0 0 22px" }}>
         Key findings, supporting reviews and areas to investigate across BlueStone's Play Store reviews.
       </p>
@@ -76,8 +76,8 @@ export default function Overview() {
             Reset filters
           </button>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 16 }}>
-          <div className="field">
+        <div className="bs-filtergrid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 16 }}>
+          <div className="field bs-filtergrid-full">
             <label>Review source</label>
             <select className="input" value="play" disabled>
               <option value="play">Play Store</option>
@@ -97,7 +97,7 @@ export default function Overview() {
         </div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(210px,1fr))", gap: 16, marginBottom: 22 }}>
+      <div className="bs-kpigrid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(210px,1fr))", gap: 16, marginBottom: 22 }}>
         {kpis.map((k, i) => {
           const hero = i === 0;
           return (
@@ -205,6 +205,29 @@ export default function Overview() {
               </div>
             ))}
           </div>
+        </div>
+      </div>
+
+      <div className="bs-panel bs-snapshot-banner">
+        <span
+          style={{
+            width: 36,
+            height: 36,
+            borderRadius: 11,
+            background: "#eaf1ff",
+            display: "grid",
+            placeItems: "center",
+            flex: "none",
+          }}
+        >
+          <svg width={18} height={18} viewBox="0 0 24 24" fill="none" stroke="#2563eb" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round">
+            <path d="M3 3v18h18" />
+            <path d="m7 14 4-4 3 3 5-6" />
+          </svg>
+        </span>
+        <div>
+          <div style={{ font: '700 13px/1 "Plus Jakarta Sans",sans-serif', color: "#132434" }}>Review snapshot</div>
+          <div style={{ fontSize: 12, color: "#7a8593", marginTop: 4 }}>Real Play Store reviews · {fmt(kpisData.totalReviews)} total</div>
         </div>
       </div>
     </section>
