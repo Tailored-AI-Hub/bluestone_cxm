@@ -3,12 +3,13 @@ import { decorate, sevStyle } from "../lib/format";
 import { insights } from "../data/insights";
 
 const categories = ["Product", "Store", "App", "Customer Support", "Delivery & Logistics", "Brand Perception"];
+const tabs = ["All", ...categories];
 
 export default function Insights() {
-  const [cat, setCat] = useState("Product");
+  const [cat, setCat] = useState("All");
   const [expanded, setExpanded] = useState({});
 
-  const catInsights = insights.filter((i) => i.cat === cat);
+  const catInsights = cat === "All" ? insights : insights.filter((i) => i.cat === cat);
 
   function toggle(key) {
     setExpanded((s) => ({ ...s, [key]: !s[key] }));
@@ -22,7 +23,7 @@ export default function Insights() {
       </p>
 
       <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 22 }}>
-        {categories.map((c) => (
+        {tabs.map((c) => (
           <button key={c} onClick={() => setCat(c)} className={"btn btn-secondary" + (c === cat ? " active" : "")} style={{ fontSize: 13 }}>
             {c}
           </button>
@@ -37,7 +38,14 @@ export default function Insights() {
             <div key={key} className="bs-panel" style={{ padding: "20px 22px" }}>
               <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 14 }}>
                 <h3 style={{ fontSize: 20, margin: 0, color: "#132434", lineHeight: 1.25, flex: 1 }}>{ins.headline}</h3>
-                <span style={sevStyle(ins.sev)}>{ins.sev}</span>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, flex: "none" }}>
+                  {cat === "All" && (
+                    <span className="tag tag-outline" style={{ fontSize: 10 }}>
+                      {ins.cat}
+                    </span>
+                  )}
+                  <span style={sevStyle(ins.sev)}>{ins.sev}</span>
+                </div>
               </div>
               <div style={{ display: "flex", alignItems: "center", gap: 14, marginTop: 14 }}>
                 <span style={{ fontSize: 13, color: "#5b6672" }}>
