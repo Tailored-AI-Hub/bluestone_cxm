@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import StarBarChart from "../components/charts/StarBarChart";
 import Donut from "../components/charts/Donut";
-import LineTrend from "../components/charts/LineTrend";
+import VolumeReplyTrend from "../components/charts/VolumeReplyTrend";
 import SentimentBars from "../components/charts/SentimentBars";
 import { fmt, sevStyle } from "../lib/format";
 import reviews from "../data/generated/reviews.json";
@@ -28,6 +28,24 @@ export default function Overview() {
   const [fTo, setFTo] = useState(DATA_MAX);
 
   const inRange = useMemo(() => reviews.filter((r) => r.d.slice(0, 7) >= fFrom && r.d.slice(0, 7) <= fTo), [fFrom, fTo]);
+
+  // Volume + reply-rate, last 12 calendar months present in the data (mirrors trend.json's
+  // window; not affected by the range filter above, same as the rating-trend line it sits with).
+  const volumeReplyTrend = useMemo(() => {
+    const monthKeys = [...new Set(reviews.map((r) => r.d.slice(0, 7)))].sort().slice(-12);
+    const byMonth = Object.fromEntries(monthKeys.map((m) => [m, { vol: 0, replied: 0 }]));
+    reviews.forEach((r) => {
+      const m = r.d.slice(0, 7);
+      if (byMonth[m]) {
+        byMonth[m].vol++;
+        if (r.reply) byMonth[m].replied++;
+      }
+    });
+    return {
+      volumes: monthKeys.map((m) => byMonth[m].vol),
+      replied: monthKeys.map((m) => byMonth[m].replied),
+    };
+  }, []);
 
   const totVol = inRange.length;
   const avg = totVol ? inRange.reduce((s, r) => s + r.r, 0) / totVol : 0;
@@ -161,9 +179,16 @@ export default function Overview() {
       </div>
 
       <div className="bs-panel" style={{ marginBottom: 22 }}>
-        <h3 style={{ fontSize: 19, margin: "0 0 3px", color: "#132434" }}>Rating trend — last 12 months</h3>
-        <p style={{ fontSize: 12.5, color: "#7a8593", margin: "0 0 16px" }}>Monthly average star rating, Play Store</p>
-        <LineTrend series={trend.series} labels={trend.labels} min={1} max={5} />
+        <h3 style={{ fontSize: 19, margin: "0 0 3px", color: "#132434" }}>Review volume, replies &amp; rating — last 12 months</h3>
+        <p style={{ fontSize: 12.5, color: "#7a8593", margin: "0 0 16px" }}>
+          Bars: reviews received vs. replied to (right scale) · Line: monthly average rating (left scale) · Play Store
+        </p>
+        <VolumeReplyTrend
+          labels={trend.labels}
+          volumes={volumeReplyTrend.volumes}
+          replied={volumeReplyTrend.replied}
+          ratings={trend.series}
+        />
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(320px,1fr))", gap: 22, marginBottom: 22 }}>
