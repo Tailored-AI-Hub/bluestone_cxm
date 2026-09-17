@@ -33,12 +33,39 @@ function pageWindow(current, total) {
   return [...set].filter((n) => n >= 1 && n <= total).sort((a, b) => a - b);
 }
 
+function ReplyButton({ reviewId, open, onToggle }) {
+  return (
+    <button onClick={() => onToggle(reviewId)} className="btn btn-secondary" style={{ fontSize: 12, padding: "5px 12px", flex: "none" }}>
+      {open ? "Hide reply" : "Show reply"}
+    </button>
+  );
+}
+
+function ReplyBox({ text }) {
+  return (
+    <div className="bs-reply-box">
+      <div className="bs-reply-label">BlueStone replied</div>
+      {text}
+    </div>
+  );
+}
+
 export default function ReviewsFeed() {
   const [timeTab, setTimeTab] = useState("all");
   const [platform, setPlatform] = useState("all");
   const [star, setStar] = useState("all");
   const [page, setPage] = useState(1);
+  const [openReplies, setOpenReplies] = useState(() => new Set());
   const isMobile = useIsMobile();
+
+  function toggleReply(id) {
+    setOpenReplies((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
 
   const filtered = useMemo(() => {
     const cutoff = cutoffFor(timeTabDefs.find((t) => t.v === timeTab).days);
@@ -142,13 +169,9 @@ export default function ReviewsFeed() {
               <div className="bs-rcard-divider" />
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                 <span style={{ fontSize: 12, color: "#9aa3b2" }}>{r.date}</span>
-                <span className="bs-rcard-openbtn">
-                  <svg width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="#8b95a7" strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M7 17 17 7" />
-                    <path d="M8 7h9v9" />
-                  </svg>
-                </span>
+                {r.reply && <ReplyButton reviewId={r.id} open={openReplies.has(r.id)} onToggle={toggleReply} />}
               </div>
+              {r.reply && openReplies.has(r.id) && <ReplyBox text={r.reply} />}
             </div>
           ) : (
             <div key={i} className="bs-panel" style={{ padding: "18px 20px" }}>
@@ -188,7 +211,9 @@ export default function ReviewsFeed() {
                       </span>
                     )}
                     <span style={{ fontSize: 12, color: "#9aa4b0", marginLeft: "auto" }}>{r.date}</span>
+                    {r.reply && <ReplyButton reviewId={r.id} open={openReplies.has(r.id)} onToggle={toggleReply} />}
                   </div>
+                  {r.reply && openReplies.has(r.id) && <ReplyBox text={r.reply} />}
                 </div>
               </div>
             </div>

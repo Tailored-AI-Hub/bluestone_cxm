@@ -163,6 +163,24 @@ select.input {
   background: transparent;
 }
 
+.bs-reply-box {
+  margin-top: 10px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #f4f7fc;
+  border-left: 3px solid #3b82f6;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #3d4a5c;
+}
+.bs-reply-label {
+  font: 700 10.5px/1 "Plus Jakarta Sans", sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #2563eb;
+  margin-bottom: 5px;
+}
+
 a {
   color: #2563eb;
 }
@@ -300,15 +318,5 @@ a {
     height: 1px;
     background: #eef1f6;
     margin: 12px 0;
-  }
-  .bs-rcard-openbtn {
-    width: 30px;
-    height: 30px;
-    flex: none;
-    border-radius: 9px;
-    background: #f0f3f8;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 }

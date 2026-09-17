@@ -59,6 +59,7 @@ export function decorate(r) {
   const platName = platformNames[r.p] || "";
   const sen = senMap[r.s] || senMap.neu;
   return {
+    id: r.id,
     name: r.name,
     text: r.t,
     date: r.d ? prettyDate(r.d) : "",
@@ -78,5 +79,6 @@ export function decorate(r) {
       borderRadius: 6,
     },
     compTag: r.c || "",
+    reply: r.reply || "",
   };
 }
